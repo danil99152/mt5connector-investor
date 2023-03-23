@@ -10,16 +10,15 @@ RUN python.exe -m pip install --upgrade pip
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY ./mt5connector-investor/ ./mt5connector-investor/
 COPY ["./MetaTrader 5/", "C:/Program Files/MetaTrader 5/"]
-WORKDIR "/mt5connector-investor"
 # enter entry point parameters executing the container
 ENTRYPOINT ["powershell.exe"]
 
 # exposing the port to match the port in the runserver.py file
 EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "mt5connector-investor.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 #CMD [ "/MetaTrader/terminal64.exe", "/portable" ]
 # build
 # docker build -t mt5connector-investor .
 # run
-# docker run mt5connector-investor -p 8000:8000
+# docker run -p 8000:8000 <image_id>
